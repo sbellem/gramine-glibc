@@ -1310,7 +1310,7 @@ $(objpfx)librtld.map: $(objpfx)dl-allobjs.os $(common-objpfx)libc_pic.a
 # For lld, skip preceding addresses and values before matching the archive and the member.
 $(objpfx)librtld.mk: $(objpfx)librtld.map Makefile
 	LC_ALL=C \
-	sed -n 's@^[0-9a-f ]*$(common-objpfx)\([^(]*\)(\([^)]*\.os\)) *.*$$@\1 \2@p' \
+	sed -n 's@^[0-9a-f ]*$(subst @,\@,$(common-objpfx))\([^(]*\)(\([^)]*\.os\)) *.*$$@\1 \2@p' \
 	    $< | \
 	while read lib file; do \
 	  case $$lib in \
@@ -1318,7 +1318,7 @@ $(objpfx)librtld.mk: $(objpfx)librtld.map Makefile
 	    LC_ALL=C grep -F -l /$$file \
 		  $(common-objpfx)stamp.os $(common-objpfx)*/stamp.os | \
 	    LC_ALL=C \
-	    sed 's@^$(common-objpfx)\([^/]*\)/stamp\.os$$@rtld-\1'" +=$$file@"\
+	    sed 's@^$(subst @,\@,$(common-objpfx))\([^/]*\)/stamp\.os$$@rtld-\1'" +=$$file@"\
 	    ;; \
 	  */*.a) \
 	    echo rtld-$${lib%%/*} += $$file ;; \

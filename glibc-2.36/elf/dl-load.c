@@ -76,6 +76,8 @@ struct filebuf
 #include <dl-prop.h>
 #include <not-cancel.h>
 
+#include "gramine_entry_api.h"
+
 #include <endian.h>
 #if BYTE_ORDER == BIG_ENDIAN
 # define byteorder ELFDATA2MSB
@@ -1489,6 +1491,8 @@ cannot enable executable stack as shared object requires");
 #ifdef DL_AFTER_LOAD
   DL_AFTER_LOAD (l);
 #endif
+
+  gramine_register_library(l->l_name, l->l_addr);
 
   /* Now that the object is fully initialized add it to the object list.  */
   _dl_add_to_namespace_list (l, nsid);

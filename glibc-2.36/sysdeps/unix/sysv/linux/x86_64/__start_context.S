@@ -51,7 +51,7 @@ ENTRY(__push___start_context)
 	movl	$ARCH_CET_ALLOC_SHSTK, %edi
 	movl	$__NR_arch_prctl, %eax
 	/* The new shadow stack base is returned in __ssp[1].  */
-	syscall
+	GRAMINE_SYSCALL
 	testq	%rax, %rax
 	jne	L(hlt)		/* This should never happen.  */
 
